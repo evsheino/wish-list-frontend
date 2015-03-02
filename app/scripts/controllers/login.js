@@ -4,17 +4,16 @@
  * @name wishlistsApp.controller:LoginCtrl
  * @description
  * # LoginCtrl
- * Manages authentication to any active providers.
+ * Manages authentication.
  */
 angular.module('wishlistsApp')
-  .controller('LoginCtrl', function ($scope, $location, $http, $window, LoginService) {
+  .controller('LoginCtrl', function ($scope, $location, $cookieStore, LoginService) {
 
     $scope.passwordLogin = function(username, password) {
       LoginService.post({ username: username, password: password }).then(
         function(data) {
           console.log(data.token);
-          $window.sessionStorage.token = data.token;
-          //$http.defaults.headers.common['Authorization'] = 'JWT ' + data.token;
+          $cookieStore.put('token', data.token);
         },
         function(err) {
           console.log(err);
