@@ -17,7 +17,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'restangular'
+    'restangular',
+    'angular-loading-bar'
   ])
   .config(function($resourceProvider) {
     $resourceProvider.defaults.stripTrailingSlashes = false;
