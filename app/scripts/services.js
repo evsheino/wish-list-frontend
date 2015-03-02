@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('wishlistsApp')
-  .factory('Users', function($resource) {
-    var URL = 'http://ancient-hamlet-3885.herokuapp.com/users'; 
-
-    return $resource(URL);
-});
+  .factory('Users', function(Restangular) {
+    return Restangular.service('users');
+})
+  .factory('Gifts', function($resource) {
+    return Restangular.service('gifts');
+})
+;

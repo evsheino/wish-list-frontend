@@ -16,7 +16,8 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'restangular'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -31,7 +32,11 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  }).config(function($httpProvider) {
+  })
+  .config(function($httpProvider) {
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
-});
+  })
+  .config(function(RestangularProvider) {
+    RestangularProvider.setBaseUrl('http://ancient-hamlet-3885.herokuapp.com/');
+  });

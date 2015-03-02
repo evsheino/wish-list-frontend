@@ -10,14 +10,6 @@
 angular.module('wishlistsApp')
 
   .controller('MainCtrl', function ($scope, Users) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-
-    var users = Users.query(function(users) {
-        console.log(users[0]);
-        $scope.entries = users;
-    });
+        $scope.entries = Users.one(1).getList('gifts').$object;
+        console.log($scope.entries);
   });
