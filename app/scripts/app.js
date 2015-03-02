@@ -19,6 +19,12 @@ angular
     'ngTouch',
     'restangular'
   ])
+  .config(function($resourceProvider) {
+    $resourceProvider.defaults.stripTrailingSlashes = false;
+  })
+  .config(function ($httpProvider) {
+    $httpProvider.interceptors.push('httpRequestInterceptor');
+  })
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
@@ -26,8 +32,8 @@ angular
         controller: 'MainCtrl'
       })
       .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl'
       })
       .otherwise({
         redirectTo: '/'
@@ -38,5 +44,5 @@ angular
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
   })
   .config(function(RestangularProvider) {
-    RestangularProvider.setBaseUrl('http://ancient-hamlet-3885.herokuapp.com/');
+    RestangularProvider.setBaseUrl('https://ancient-hamlet-3885.herokuapp.com/');
   });
