@@ -1,6 +1,11 @@
 <div class="row">
   <ul>
     <li ng-repeat="gift in entries">
-    {{ gift.name }} {{ gift.purchases }}
+    {{ gift.name }}
+      <ul>
+        <li ng-repeat="purchase in gift.purchases">
+        Purchased by {{ purchase.user.username }} {{ purchase.comment }}
+        </li>
+      </ul>
     </li>
   </div>

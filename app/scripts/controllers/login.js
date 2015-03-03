@@ -7,13 +7,13 @@
  * Manages authentication.
  */
 angular.module('wishlistsApp')
-  .controller('LoginCtrl', function ($scope, $location, $cookieStore, LoginService) {
+  .controller('LoginCtrl', function ($scope, $location, $cookieStore, LoginService, jwtHelper) {
 
     $scope.passwordLogin = function(username, password) {
-      LoginService.post({ username: username, password: password }).then(
+      LoginService.login(username, password).then(
         function(data) {
-          console.log(data.token);
           $cookieStore.put('token', data.token);
+          $location.path('/');
         },
         function(err) {
           console.log(err);
@@ -40,4 +40,8 @@ angular.module('wishlistsApp')
       }
     };
 
+  })
+  .controller('LogoutCtrl', function ($scope, $location, LoginService) {
+    LoginService.logout();
+    $location.path('/');
   });

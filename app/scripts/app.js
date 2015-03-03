@@ -18,7 +18,8 @@ angular
     'ngSanitize',
     'ngTouch',
     'restangular',
-    'angular-loading-bar'
+    'angular-loading-bar',
+    'angular-jwt'
   ])
   .config(function($resourceProvider) {
     $resourceProvider.defaults.stripTrailingSlashes = false;
@@ -32,9 +33,13 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/about', {
+      .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl'
+      })
+      .when('/logout', {
+        templateUrl: 'views/main.html',
+        controller: 'LogoutCtrl'
       })
       .otherwise({
         redirectTo: '/'

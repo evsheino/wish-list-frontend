@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('wishlistsApp')
-.factory('httpRequestInterceptor', function ($cookieStore) {
+.factory('httpRequestInterceptor', function ($cookieStore, $q, $location) {
   return {
     request: function (config) {
 
@@ -16,7 +16,7 @@ angular.module('wishlistsApp')
       if(response.status === 401 || response.status === 403) {
         // The authentication token is invalid, remove it.
         $cookieStore.remove('token');
-        return config;
+        $location.path('/');
       }
       return $q.reject(response);
     }
