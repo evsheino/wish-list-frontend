@@ -1,22 +1,28 @@
 'use strict';
 
 angular.module('wishlistsApp')
-.factory('httpRequestInterceptor', function ($cookieStore, $q, $location) {
+.factory('httpRequestInterceptor', function ($cookieStore, $q, $location, jwtHelper) {
   return {
     request: function (config) {
 
-      // Set the Authorization header if token has been saved before.
       var token = $cookieStore.get('token');
-      if (token)
+
+      if (token && jwtHelper.isTokenExpired(token)) {
+        // The authentication token has expired, remove it.
+        $cookieStore.remove('token');
+        token = undefined;
+      }
+
+      // Set the Authorization header if the token exists.
+      if (token) {
         config.headers.Authorization = 'JWT ' + token;
+      }
 
       return config;
     },
     'responseError': function(response) {
       if(response.status === 401 || response.status === 403) {
-        // The authentication token is invalid, remove it.
-        $cookieStore.remove('token');
-        $location.path('/');
+        $location.path('/login');
       }
       return $q.reject(response);
     }
