@@ -7,13 +7,32 @@
           <th>Title</th>
           <th>Author</th>
           <th>Comment</th>
+          <th></th>
         </thead>
         <tbody>
-          <tr ng-repeat="gift in entries">
-            <td data-title="Category">{{ gift.category }}</td>
-            <td data-title="Title">{{ gift.name }}</td>
-            <td data-title="Author">{{ gift.author }}</td>
-            <td data-title="Comment">{{ gift.comment }}</td>
+          <tr ng-repeat="(giftId, gift) in entries">
+            <td data-title="Category">
+              <span ng-show="!editMode">{{ gift.category.name }}</span>
+              <select ng-show="editMode" class="form-control" ng-model="gift.category" 
+                ng-options="cat.id as cat.name for cat in categories">
+              </select>
+            </td>
+            <td data-title="Title">
+              <span ng-show="!editMode">{{ gift.name }}</span>
+              <input ng-show="editMode" type="text" class="form-control" ng-model="gift.name" />
+            </td>
+            <td data-title="Author">
+              <span ng-show="!editMode">{{ gift.author }}</span>
+              <input ng-show="editMode" type="text" class="form-control" ng-model="gift.author" />
+            </td>
+            <td data-title="Comment">
+              <span ng-show="!editMode">{{ gift.comment }}</span>
+              <input ng-show="editMode" type="text" class="form-control" ng-model="gift.comment" />
+            </td>             
+            <td>
+              <button ng-click="editMode = !editMode" ng-show="!editMode" class="btn btn-primary">Edit</button>
+              <button ng-show="editMode" class="btn btn-primary" ng-click="save(gift)">Save</button>
+            </td>
           </tr>
         </tbody>
       </table>

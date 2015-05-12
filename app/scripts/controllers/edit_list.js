@@ -9,7 +9,7 @@
  */
 angular.module('wishlistsApp')
 
-  .controller('EditListCtrl', function ($scope, $location, Users, Categories, LoginService) {
+  .controller('EditListCtrl', function ($scope, $location, Users, Categories, Gifts, LoginService) {
     var user = LoginService.getCurrentUser();
 
     if (!user) {
@@ -19,4 +19,8 @@ angular.module('wishlistsApp')
 
     $scope.categories = Categories.getList().$object;
     $scope.entries = Users.one(user.user_id).getList('gifts').$object;
+
+    $scope.save = function(gift) {
+      Gifts.post(gift);
+    };
   });
