@@ -17,10 +17,21 @@ angular.module('wishlistsApp')
       return;
     }
 
-    $scope.categories = Categories.getList().$object;
-    $scope.entries = Users.one(user.user_id).getList('gifts').$object;
+    $scope.editMode = false;
+
+    Categories.getList().then(function(categories) {
+      $scope.categories = categories;
+    });
+    Users.one(user.user_id).getList('gifts').then(function(gifts) {
+      $scope.entries = gifts;
+    });
 
     $scope.save = function(gift) {
-      Gifts.post(gift);
+      Gifts.one(gift.id).doPUT(gift).then(
+        function() { 
+          $scope.msg = "Updated successfully";
+          $scope.editMode = false;
+        }, 
+        function(err) { $scope.err = err; });
     };
   });
