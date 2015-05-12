@@ -10,30 +10,34 @@
           <th>Author</th>
           <th>Comment</th>
           <th></th>
+          <th></th>
         </thead>
         <tbody>
-          <tr ng-repeat="(giftId, gift) in entries">
+          <tr ng-repeat="gift in entries" ng-click="startEdit($index)">
             <td data-title="Category">
-              <span ng-show="$parent.editMode != $index">{{ gift.category.name }}</span>
-              <select ng-show="$parent.editMode == $index" class="form-control" ng-model="gift.category" 
+              <!-- TODO: Fix server-side so that category is easier to obtain -->
+              <span ng-hide="editModeCheck($index)">{{ (categories | filter:{id: gift.category})[0].name }}</span>
+              <select ng-show="editModeCheck($index)" class="form-control" ng-model="gift.category" 
                 ng-options="cat.id as cat.name for cat in categories">
               </select>
             </td>
             <td data-title="Title">
-              <span ng-show="$parent.editMode != $index">{{ gift.name }}</span>
-              <input ng-show="$parent.editMode == $index" type="text" class="form-control" ng-model="gift.name" />
+              <span ng-hide="editModeCheck($index)">{{ gift.name }}</span>
+              <input ng-show="editModeCheck($index)" ng-model="gift.name" class="form-control" />
             </td>
             <td data-title="Author">
-              <span ng-show="$parent.editMode != $index">{{ gift.author }}</span>
-              <input ng-show="$parent.editMode == $index" type="text" class="form-control" ng-model="gift.author" />
+              <span ng-hide="editModeCheck($index)">{{ gift.author }}</span>
+              <input ng-show="editModeCheck($index)" ng-model="gift.author" class="form-control" />
             </td>
             <td data-title="Comment">
-              <span ng-show="$parent.editMode != $index">{{ gift.comment }}</span>
-              <input ng-show="$parent.editMode == $index" type="text" class="form-control" ng-model="gift.comment" />
-            </td>             
-            <td>
-              <button ng-click="$parent.editMode = $index" ng-show="$parent.editMode != $index" class="btn btn-primary">Edit</button>
-              <button ng-show="$parent.editMode == $index" class="btn btn-primary" ng-click="save(gift)">Save</button>
+              <span ng-hide="editModeCheck($index)">{{ gift.comment }}</span>
+              <input ng-show="editModeCheck($index)" ng-model="gift.comment" class="form-control" />
+            </td>
+            <td data-title="">
+              <button class="btn btn-primary" ng-if="editModeCheck($index)" ng-click="save(gift)">Save</button>
+            </td>
+            <td data-title="">
+              <button class="btn btn-primary" ng-if="editModeCheck($index)" ng-click="cancelEdit()" >Cancel</button>
             </td>
           </tr>
         </tbody>

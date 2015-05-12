@@ -101,7 +101,7 @@ body {
 	.responsive-table tr { 
 		display: block; 
 	}
- 
+
 	/* Hide table headers (but not display: none;, for accessibility) */
 	.responsive-table thead tr { 
 		position: absolute;
@@ -118,7 +118,7 @@ body {
 		position: relative;
 		padding-left: 50% !important; 
 		white-space: normal;
-		text-align:left;
+		text-align: left;
 	}
  
 	.responsive-table td:before { 
@@ -133,10 +133,10 @@ body {
 		text-align:left;
 		font-weight: bold;
 	}
- 
+
 	/* Label the data */
 	.responsive-table td:before { content: attr(data-title); }
 
         /* Add a non-breaking space to empty cells so that the cell height doesn't shrink */
-	.responsive-table td:empty:after { content: "\a0"; }
+	.responsive-table td span:empty:after { content: "\a0"; }
 }
