@@ -17,6 +17,6 @@ angular.module('wishlistsApp')
       return;
     }
 
-    $scope.categories = Categories.getList();
+    $scope.categories = Categories.getList().$object;
     $scope.entries = Users.one(user.user_id).getList('gifts').$object;
   });

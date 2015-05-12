@@ -1,15 +1,22 @@
 <div class="row">
   <div class="col-md-12">
-    {{ categories }}
-    <ul>
-      <li ng-repeat="gift in entries">
-        {{ gift.name }}
-        <ul>
-          <li ng-repeat="purchase in gift.purchases">
-            Purchased by {{ purchase.user.username }} {{ purchase.comment }}
-          </li>
-        </ul>
-      </li>
-    </ul>
+    <div class="responsive-table">
+      <table class="table table-hover">
+        <thead>
+          <th>Category</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Comment</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="gift in entries">
+            <td data-title="Category">{{ gift.category }}</td>
+            <td data-title="Title">{{ gift.name }}</td>
+            <td data-title="Author">{{ gift.author }}</td>
+            <td data-title="Comment">{{ gift.comment }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
