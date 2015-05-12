@@ -1,29 +1,29 @@
 <h2>Login Page</h2>
 
-<form role="form">
-  <p class="form-group">
+<form role="form" name="loginForm">
+  <div class="form-group">
     <label for="loginEmail">email</label>
     <input id="loginEmail" required name="email" ng-model="email" class="form-control" />
-  </p>
-  <p class="form-group" ng-show="createMode">
+  </div>
+  <div class="form-group" ng-show="createMode">
     <label for="loginName">name</label>
-    <input id="loginName" required name="name" ng-model="name" class="form-control" />
-  </p>
-  <p class="form-group">
+    <input id="loginName" ng-required="createMode" name="name" ng-model="name" class="form-control" />
+  </div>
+  <div class="form-group">
     <label for="loginPass">password</label>
     <input id="loginPass" required name="pass" type="password" ng-model="pass" class="form-control" />
-  </p>
-  <p class="form-group" ng-cloak ng-show="createMode">
+  </div>
+  <div class="form-group" ng-cloak ng-show="createMode">
     <label for="loginConfirm">confirm pass</label>
-    <input id="loginConfirm" required name="confirm" type="password" ng-model="confirm" class="form-control" />
-  </p>
-
-  <p>
-    <button  class="btn btn-primary" ng-click="passwordLogin(email, pass)" ng-hide="createMode">Log In</button>
+    <input id="loginConfirm" ng-required="createMode" name="confirm" type="password" ng-model="confirm" class="form-control" />
+  </div>
+  <div>
+    <button  class="btn btn-primary" ng-click="passwordLogin()" ng-hide="createMode" 
+      ng-disabled="loginForm.$invalid">Log In</button>
     <button  class="btn btn-default" ng-click="createMode = true" ng-hide="createMode">Register</button>
-    <button  class="btn btn-primary" ng-cloak ng-show="createMode"
-            ng-click="createAccount(email, pass, confirm, name)">Create Account</button>
+    <button  class="btn btn-primary" ng-cloak ng-show="createMode" ng-disabled="loginForm.$invalid"
+            ng-click="createAccount()">Create Account</button>
     <button  class="btn btn-default" ng-cloak ng-show="createMode" ng-click="createMode = false">Cancel</button>
-  </p>
+  </div>
 </form>
-<p ng-show="err" class="bg-danger">{{err}}</p>
+<div ng-show="err" class="bg-danger">{{err}}</div>

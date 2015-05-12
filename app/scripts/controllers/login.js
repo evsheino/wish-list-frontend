@@ -9,8 +9,11 @@
 angular.module('wishlistsApp')
   .controller('LoginCtrl', function ($scope, $location, $cookieStore, LoginService, jwtHelper) {
 
-    $scope.passwordLogin = function(username, password) {
-      LoginService.login(username, password).then(
+    $scope.passwordLogin = function() {
+      if ($scope.loginForm.$invalid)
+        return;
+
+      LoginService.login($scope.email, $scope.pass).then(
         function(data) {
           $cookieStore.put('token', data.token);
           $location.path('/');
@@ -22,16 +25,16 @@ angular.module('wishlistsApp')
       );
     };
 
-    $scope.createAccount = function(username, pass, confirm, name) {
+    $scope.createAccount = function() {
+      if ($scope.loginForm.$invalid)
+        return;
+
       $scope.err = null;
-      if( !pass ) {
-        $scope.err = 'Please enter a password';
-      }
-      else if( pass !== confirm ) {
+
+      if( $scope.pass !== $scope.confirm ) {
         $scope.err = 'Passwords do not match';
-      }
-      else {
-        simpleLogin.createAccount(username, pass, name)
+      } else {
+        simpleLogin.createAccount($scope.email, $scope.pass, $scope.name)
           .then(function() {
             $location.path('/account');
           }, function(err) {
