@@ -7,6 +7,9 @@ angular.module('wishlistsApp')
   .factory('Gifts', function(Restangular) {
     return Restangular.service('gifts');
 })
+  .factory('Categories', function(Restangular) {
+    return Restangular.service('categories');
+})
   .factory('LoginService', function($rootScope, Restangular, $cookieStore, jwtHelper) {
     return {
       login: function(username, password) {

@@ -41,6 +41,10 @@ angular
         templateUrl: 'views/main.html',
         controller: 'LogoutCtrl'
       })
+      .when('/list/edit', {
+        templateUrl: 'views/edit_list.html',
+        controller: 'EditListCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
@@ -51,4 +55,5 @@ angular
   })
   .config(function(RestangularProvider) {
     RestangularProvider.setBaseUrl('https://ancient-hamlet-3885.herokuapp.com/');
+    RestangularProvider.setRequestSuffix('/');
   });
