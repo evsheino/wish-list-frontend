@@ -17,20 +17,29 @@ angular.module('wishlistsApp')
       return;
     }
 
+    $scope.categories = {};
     $scope.editMode;
+
+    // Copy of the entry with original values being currently edited
+    // for reverting changes
     var stashedGift;
 
     Categories.getList().then(function(categories) {
-      $scope.categories = categories;
+      categories.forEach(function(cat) {
+        $scope.categories[cat.id] = cat;
+      });
     });
+
     Users.one(user.user_id).getList('gifts').then(function(gifts) {
       $scope.entries = gifts;
     });
 
+    // Check if the current entry is in edit mode
     $scope.editModeCheck = function(index) {
       return $scope.editMode == index;
     };
 
+    // Turn on edit mode for the current entry and disable it in other entries
     $scope.startEdit = function(index) {
       if (stashedGift && stashedGift.index != index) {
         $scope.cancelEdit();
@@ -40,14 +49,17 @@ angular.module('wishlistsApp')
       $scope.editMode = index;
     };
 
+    // Cancel edit and revert changes to the entry
     $scope.cancelEdit = function() {
       $scope.entries[stashedGift.index] = angular.copy(stashedGift.gift);
       stashedGift = null;
       $scope.editMode = null;
     };
 
+    // Update the entry
     $scope.save = function(gift) {
-      Gifts.one(gift.id).doPUT(gift).then(
+      gift.category_id = gift.category.id
+      gift.put().then(
         function() { 
           $scope.msg = "Updated successfully";
           $scope.editMode = null;

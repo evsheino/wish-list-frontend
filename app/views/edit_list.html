@@ -15,10 +15,9 @@
         <tbody>
           <tr ng-repeat="gift in entries" ng-click="startEdit($index)">
             <td data-title="Category">
-              <!-- TODO: Fix server-side so that category is easier to obtain -->
-              <span ng-hide="editModeCheck($index)">{{ (categories | filter:{id: gift.category})[0].name }}</span>
+              <span ng-hide="editModeCheck($index)">{{ categories[gift.category].name }}</span>
               <select ng-show="editModeCheck($index)" class="form-control" ng-model="gift.category" 
-                ng-options="cat.id as cat.name for cat in categories">
+                ng-options="cat.id as cat.name for (id, cat) in categories">
               </select>
             </td>
             <td data-title="Title">
