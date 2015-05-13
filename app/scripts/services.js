@@ -35,7 +35,7 @@ angular.module('wishlistsApp')
         var token = $cookieStore.get('token');
 
         // Refresh only if close to expiration
-        if (token && jwtHelper.getTokenExpirationDate(token) - Date.now() < checkDelta) {
+        if (token && jwtHelper.getTokenExpirationDate(token) - Date.now() < refreshDelta) {
 
           Restangular.service('api-token-refresh/').post({ token: token }).then(
             function(data) {
