@@ -59,4 +59,19 @@ angular
   .config(function(RestangularProvider) {
     RestangularProvider.setBaseUrl('https://ancient-hamlet-3885.herokuapp.com/');
     RestangularProvider.setRequestSuffix('/');
+  })
+  .run(function($cookieStore, $interval, jwtHelper, LoginService) {
+    // Refresh auth token if needed
+    var refreshInterval = 1000*60*60; // 1 hour
+    $interval(function() {
+      var token = $cookieStore.get('token');
+      if (token && jwtHelper.getTokenExpirationDate(token) - Date.now() < refreshInterval) {
+        LoginService.refreshToken(token).then(function(data) {
+          $cookieStore.put('token', data.token);
+        }, function(err) {
+          $cookieStore.remove('token');
+          LoginService.logout();
+        });
+      }
+    }, refreshInterval);
   });

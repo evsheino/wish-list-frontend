@@ -15,7 +15,7 @@ angular.module('wishlistsApp')
       login: function(username, password) {
         return Restangular.service('api-token-auth/').post({ username: username, password: password });
       },
-      logout: function(username, password) {
+      logout: function() {
         $cookieStore.remove('token');
         $rootScope.isAuthenticated = false;
       },
@@ -23,6 +23,9 @@ angular.module('wishlistsApp')
         var token = $cookieStore.get('token');
         if (token)
           return jwtHelper.decodeToken(token);
+      },
+      refreshToken: function(token) {
+        return Restangular.service('api-token-refresh/').post({ token: token });
       }
     }
   });

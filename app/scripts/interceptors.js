@@ -4,7 +4,6 @@ angular.module('wishlistsApp')
 .factory('httpRequestInterceptor', function ($cookieStore, $q, $location, jwtHelper, $rootScope) {
   return {
     request: function (config) {
-
       var token = $cookieStore.get('token');
 
       if (token && jwtHelper.isTokenExpired(token)) {
