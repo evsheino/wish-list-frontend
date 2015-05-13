@@ -61,17 +61,11 @@ angular
     RestangularProvider.setRequestSuffix('/');
   })
   .run(function($cookieStore, $interval, jwtHelper, LoginService) {
-    // Refresh auth token if needed
-    var refreshInterval = 1000*60*60; // 1 hour
+    // Check auth token expiration every hour and refresh it if needed
+    var checkInterval = 1000*60*60; // 1 hour
+    var refreshDelta = checkInterval * 2;
+
     $interval(function() {
-      var token = $cookieStore.get('token');
-      if (token && jwtHelper.getTokenExpirationDate(token) - Date.now() < refreshInterval) {
-        LoginService.refreshToken(token).then(function(data) {
-          $cookieStore.put('token', data.token);
-        }, function(err) {
-          $cookieStore.remove('token');
-          LoginService.logout();
-        });
-      }
-    }, refreshInterval);
+      LoginService.refreshToken(refreshDelta);
+    }, checkInterval);
   });
