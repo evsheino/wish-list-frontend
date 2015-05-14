@@ -3,6 +3,14 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 
+.btn-holder {
+	height: 3em;
+	min-width: 4em;
+	button {
+		margin-right: 5px;
+	}
+}
+
 @media only screen and (max-width: 800px) {
     
     /* Force table to not be like tables anymore */
@@ -48,7 +56,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 	}
 
 	/* Label the data */
-	.responsive-table td:before { content: attr(data-title); }
+	.responsive-table td:not(.no-header):before { content: attr(data-title); }
 
         /* Add a non-breaking space to empty cells so that the cell height doesn't shrink */
 	.responsive-table td span:empty:after { content: "\a0"; }

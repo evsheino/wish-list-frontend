@@ -10,33 +10,33 @@
           <th>Author</th>
           <th>Comment</th>
           <th></th>
-          <th></th>
         </thead>
         <tbody>
-          <tr ng-repeat="gift in entries" ng-click="startEdit($index)">
+          <tr ng-repeat="gift in entries" ng-mouseenter="showEditButton = true" ng-mouseleave="showEditButton = false">
             <td data-title="Category">
               <span ng-hide="editModeCheck($index)">{{ categories[gift.category].name }}</span>
-              <select ng-show="editModeCheck($index)" class="form-control" ng-model="gift.category" 
+              <select ng-show="editModeCheck($index)" class="form-control input-sm" ng-model="gift.category" 
                 ng-options="cat.id as cat.name for (id, cat) in categories">
               </select>
             </td>
             <td data-title="Title">
-              <span ng-hide="editModeCheck($index)">{{ gift.name }}</span>
-              <input ng-show="editModeCheck($index)" ng-model="gift.name" class="form-control" />
+              <span ng-hide="editModeCheck($index)"><a ng-if="gift.link" ng-href="{{gift.link}}">{{ gift.name }}</a></span>
+              <input ng-show="editModeCheck($index)" ng-model="gift.name" class="form-control input-sm" />
             </td>
             <td data-title="Author">
               <span ng-hide="editModeCheck($index)">{{ gift.author }}</span>
-              <input ng-show="editModeCheck($index)" ng-model="gift.author" class="form-control" />
+              <input ng-show="editModeCheck($index)" ng-model="gift.author" class="form-control input-sm" />
             </td>
             <td data-title="Comment">
               <span ng-hide="editModeCheck($index)">{{ gift.comment }}</span>
-              <input ng-show="editModeCheck($index)" ng-model="gift.comment" class="form-control" />
+              <input ng-show="editModeCheck($index)" ng-model="gift.comment" class="form-control input-sm" />
             </td>
-            <td data-title="">
-              <button class="btn btn-primary" ng-if="editModeCheck($index)" ng-click="save(gift)">Save</button>
-            </td>
-            <td data-title="">
-              <button class="btn btn-primary" ng-if="editModeCheck($index)" ng-click="cancelEdit()" >Cancel</button>
+            <td data-title="" class="btn-holder no-header">
+              <button class="btn btn-primary btn-xs" ng-click="startEdit($index)" ng-show="showEditButton && !editModeCheck($index)">Edit</button>
+              <div class="btn-toolbar" role="group" ng-if="editModeCheck($index)">
+                <button type="button" class="btn btn-primary btn-xs" ng-click="save(gift)">Save</button>
+                <button type="button" class="btn btn-primary btn-xs" ng-click="cancelEdit()" >Cancel</button>
+              </div>
             </td>
           </tr>
         </tbody>
