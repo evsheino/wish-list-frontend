@@ -30,13 +30,21 @@ angular.module('wishlistsApp')
       });
     });
 
-    Users.one(user.user_id).getList('gifts').then(function(gifts) {
-      $scope.entries = gifts;
-    });
+    $scope.refreshGifts = function() {
+      Users.one(user.user_id).getList('gifts').then(function(gifts) {
+        $scope.entries = gifts;
+      });
+    };
+
+    $scope.refreshGifts();
 
     // Check if the current entry is in edit mode
     $scope.editModeCheck = function(index) {
       return $scope.editMode == index;
+    };
+
+    $scope.inEditMode = function() {
+      return $scope.editMode || $scope.editMode == 0
     };
 
     // Turn on edit mode for the current entry and disable it in other entries
@@ -58,7 +66,7 @@ angular.module('wishlistsApp')
 
     // Update the entry
     $scope.save = function(gift) {
-      gift.category_id = gift.category.id
+      gift.category_id = gift.category.id;
       gift.put().then(
         function() { 
           $scope.msg = "Updated successfully";
@@ -66,4 +74,16 @@ angular.module('wishlistsApp')
         }, 
         function(err) { $scope.err = err; });
     };
+
+    $scope.add = function(gift) {
+      gift.category_id = gift.category.id;
+      gift.user = user.user_id;
+      Gifts.post(gift).then(
+        function() { 
+          $scope.msg = "Added successfully";
+          $scope.refreshGifts();
+        }, 
+        function(err) { $scope.err = err; });
+    };
+
   });

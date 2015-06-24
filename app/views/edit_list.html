@@ -9,6 +9,7 @@
           <th>Title</th>
           <th>Author</th>
           <th>Comment</th>
+          <th ng-if="inEditMode()">Link</th>
           <th></th>
         </thead>
         <tbody>
@@ -20,16 +21,25 @@
               </select>
             </td>
             <td data-title="Title">
-              <span ng-hide="editModeCheck($index)"><a ng-if="gift.link" ng-href="{{gift.link}}">{{ gift.name }}</a></span>
-              <input ng-show="editModeCheck($index)" ng-model="gift.name" class="form-control input-sm" />
+              <span ng-hide="editModeCheck($index)">
+                <a ng-if="gift.link" ng-href="{{gift.link}}">{{ gift.name }}</a>
+                <span ng-if="!gift.link">{{ gift.name }}</span>
+              </span>
+              <input type="text" placeholder="Title" ng-show="editModeCheck($index)" ng-model="gift.name" class="form-control input-sm" />
             </td>
             <td data-title="Author">
               <span ng-hide="editModeCheck($index)">{{ gift.author }}</span>
-              <input ng-show="editModeCheck($index)" ng-model="gift.author" class="form-control input-sm" />
+              <input type="text" placeholder="Author" ng-show="editModeCheck($index)" ng-model="gift.author" class="form-control input-sm" />
             </td>
             <td data-title="Comment">
               <span ng-hide="editModeCheck($index)">{{ gift.comment }}</span>
-              <input ng-show="editModeCheck($index)" ng-model="gift.comment" class="form-control input-sm" />
+              <input type="text" placeholder="Comment" ng-show="editModeCheck($index)" ng-model="gift.comment" class="form-control input-sm" />
+            </td>
+            <td ng-if="inEditMode() && !editModeCheck($index)">&nbsp;</td>
+            <td ng-if="editModeCheck($index)" data-title="Link">
+              <span>
+                <input type="text" placeholder="Link" ng-if="editModeCheck($index)" ng-model="gift.link" class="form-control input-sm" />
+              </span>
             </td>
             <td data-title="" class="btn-holder no-header">
               <button class="btn btn-primary btn-xs" ng-click="startEdit($index)" ng-show="showEditButton && !editModeCheck($index)">Edit</button>
@@ -41,6 +51,19 @@
           </tr>
         </tbody>
       </table>
+
+      <h3>New Gift</h3>
+      <form>
+        <select class="form-control" ng-model="newGift.category" 
+          ng-options="cat.id as cat.name for (id, cat) in categories">
+          <option value='' disabled selected style='display:none;'>Category</option>
+        </select>
+        <input type="text" placeholder="Title" ng-model="newGift.name" class="form-control" />
+        <input type="text" placeholder="Author" ng-model="newGift.author" class="form-control" />
+        <input type="text" placeholder="Comment" ng-model="newGift.comment" class="form-control" />
+        <input type="text" placeholder="Link" ng-model="newGift.link" class="form-control" />
+        <button type="button" class="btn btn-primary" ng-click="add(newGift)">Save</button>
+      </form>
     </div>
   </div>
 </div>
