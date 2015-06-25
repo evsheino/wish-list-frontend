@@ -45,25 +45,29 @@
               <button class="btn btn-primary btn-xs" ng-click="startEdit($index)" ng-show="showEditButton && !editModeCheck($index)">Edit</button>
               <div class="btn-toolbar" role="group" ng-if="editModeCheck($index)">
                 <button type="button" class="btn btn-primary btn-xs" ng-click="save(gift)">Save</button>
-                <button type="button" class="btn btn-primary btn-xs" ng-click="cancelEdit()" >Cancel</button>
+                <button type="button" class="btn btn-primary btn-xs" ng-click="cancelEdit()">Cancel</button>
+                <button type="button" class="btn btn-danger btn-xs" confirm-click="Are you sure?" ng-click="delete(gift)">Delete</button>
               </div>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <h3>New Gift</h3>
-      <form>
-        <select class="form-control" ng-model="newGift.category" 
-          ng-options="cat.id as cat.name for (id, cat) in categories">
-          <option value='' disabled selected style='display:none;'>Category</option>
-        </select>
-        <input type="text" placeholder="Title" ng-model="newGift.name" class="form-control" />
-        <input type="text" placeholder="Author" ng-model="newGift.author" class="form-control" />
-        <input type="text" placeholder="Comment" ng-model="newGift.comment" class="form-control" />
-        <input type="text" placeholder="Link" ng-model="newGift.link" class="form-control" />
-        <button type="button" class="btn btn-primary" ng-click="add(newGift)">Save</button>
-      </form>
+      <button ng-show="!showNew" class="btn btn-primary" ng-click="showNew = !showNew">Add New Gift</button>
+      <div ng-show="showNew" class="newGiftForm">
+        <h3>New Gift <button class="btn" ng-click="showNew = !showNew">Hide</button></h3>
+        <form>
+          <select class="form-control" ng-model="newGift.category" 
+            ng-options="cat.id as cat.name for (id, cat) in categories">
+            <option value='' disabled selected style='display:none;'>Category</option>
+          </select>
+          <input type="text" placeholder="Title" ng-model="newGift.name" class="form-control" />
+          <input type="text" placeholder="Author" ng-model="newGift.author" class="form-control" />
+          <input type="text" placeholder="Comment" ng-model="newGift.comment" class="form-control" />
+          <input type="text" placeholder="Link" ng-model="newGift.link" class="form-control" />
+          <button type="button" class="btn btn-primary" ng-click="add(newGift)">Save</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

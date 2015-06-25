@@ -1,5 +1,7 @@
 <h2>Login Page</h2>
 
+<div ng-show="err" class="bg-danger">{{err}}</div>
+
 <form role="form" name="loginForm">
   <div class="form-group">
     <label for="loginEmail">email</label>
@@ -26,4 +28,3 @@
     <button  class="btn btn-default" ng-cloak ng-show="createMode" ng-click="createMode = false">Cancel</button>
   </div>
 </form>
-<div ng-show="err" class="bg-danger">{{err}}</div>

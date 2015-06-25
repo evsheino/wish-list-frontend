@@ -20,7 +20,7 @@ angular.module('wishlistsApp')
         },
         function(err) {
           console.log(err);
-          $scope.err = err;
+          $scope.err = err.data.non_field_errors.join(" ");
         }
       );
     };

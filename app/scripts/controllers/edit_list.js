@@ -75,6 +75,15 @@ angular.module('wishlistsApp')
         function(err) { $scope.err = err; });
     };
 
+    $scope.delete = function(gift) {
+      gift.remove().then(
+          function() {
+            $scope.msg = "Deleted succesfully";
+            $scope.refreshGifts();
+          },
+          function(err) { $scope.err = err });
+    };
+
     $scope.add = function(gift) {
       gift.category_id = gift.category.id;
       gift.user = user.user_id;
