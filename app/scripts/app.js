@@ -31,11 +31,13 @@ angular
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        activeTab: 'home'
       })
       .when('/login', {
         templateUrl: 'views/login.html',
-        controller: 'LoginCtrl'
+        controller: 'LoginCtrl',
+        activeTab: 'login'
       })
       .when('/logout', {
         templateUrl: 'views/main.html',
@@ -43,7 +45,8 @@ angular
       })
       .when('/list/edit', {
         templateUrl: 'views/edit_list.html',
-        controller: 'EditListCtrl'
+        controller: 'EditListCtrl',
+        activeTab: 'edit-list'
       })
       .otherwise({
         redirectTo: '/'
