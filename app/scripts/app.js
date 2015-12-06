@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 angular
-  .module('wishlistsApp', [
+.module('wishlistsApp', [
     'ngAnimate',
     'ngCookies',
     'ngMessages',
@@ -20,55 +20,59 @@ angular
     'restangular',
     'angular-loading-bar',
     'angular-jwt'
-  ])
-  .config(function($resourceProvider) {
+])
+.config(function($resourceProvider) {
     $resourceProvider.defaults.stripTrailingSlashes = false;
-  })
-  .config(function ($httpProvider) {
+})
+.config(function ($httpProvider) {
     $httpProvider.interceptors.push('httpRequestInterceptor');
-  })
-  .config(function ($routeProvider) {
+})
+.config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
+    .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
         activeTab: 'home'
-      })
-      .when('/login', {
+    })
+    .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl',
         activeTab: 'login'
-      })
-      .when('/logout', {
+    })
+    .when('/logout', {
         templateUrl: 'views/main.html',
         controller: 'LogoutCtrl'
-      })
-      .when('/list/edit', {
+    })
+    .when('/list/edit', {
         templateUrl: 'views/edit_list.html',
         controller: 'EditListCtrl',
         activeTab: 'edit-list'
-      })
-      .otherwise({
+    })
+    .when('/list/:userId', {
+        templateUrl: 'views/view_list.html',
+        controller: 'ViewListCtrl'
+    })
+    .otherwise({
         redirectTo: '/'
-      });
-  })
-  .config(function($animateProvider) {
+    });
+})
+.config(function($animateProvider) {
     $animateProvider.classNameFilter(/animate/);
-  })
-  .config(function($httpProvider) {
+})
+.config(function($httpProvider) {
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
-  })
-  .config(function(RestangularProvider) {
+})
+.config(function(RestangularProvider) {
     RestangularProvider.setBaseUrl('https://ancient-hamlet-3885.herokuapp.com/');
     RestangularProvider.setRequestSuffix('/');
-  })
-  .run(function($cookieStore, $interval, jwtHelper, LoginService) {
+})
+.run(function($cookieStore, $interval, jwtHelper, LoginService) {
     // Check auth token expiration every hour and refresh it if needed
     var checkInterval = 1000*60*60; // 1 hour
     var refreshDelta = checkInterval * 2;
 
     $interval(function() {
-      LoginService.refreshToken(refreshDelta);
+        LoginService.refreshToken(refreshDelta);
     }, checkInterval);
-  });
+});

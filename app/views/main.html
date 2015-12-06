@@ -1,13 +1,9 @@
 <div class="row">
   <div class="col-md-12">
+    <h3>Lists</h3>
     <ul>
-      <li ng-repeat="gift in entries">
-        {{ gift.name }}
-        <ul>
-          <li ng-repeat="purchase in gift.purchases">
-            Purchased by {{ purchase.user.username }} {{ purchase.comment }}
-          </li>
-        </ul>
+      <li ng-repeat="user in users">
+        <a ng-href="#/list/{{ user.id }}">{{ user.username }}</a>
       </li>
     </ul>
   </div>

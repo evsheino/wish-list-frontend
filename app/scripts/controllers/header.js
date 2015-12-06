@@ -8,8 +8,7 @@
  * Controller of the wishlistsApp
  */
 angular.module('wishlistsApp')
-
-  .controller('HeaderCtrl', function ($scope, $route) {
+.controller('HeaderCtrl', function ($scope, $route) {
     $scope.$route = $route;
-  });
+});
 
