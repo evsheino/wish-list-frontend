@@ -10,6 +10,9 @@ angular.module('wishlistsApp')
 .factory('Categories', function(Restangular) {
     return Restangular.service('categories');
 })
+.factory('Purchases', function(Restangular) {
+    return Restangular.service('purchases');
+})
 .factory('LoginService', function($rootScope, Restangular, $cookieStore, jwtHelper) {
 
     var logout = function() {

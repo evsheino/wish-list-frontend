@@ -5,10 +5,7 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 .btn-holder {
 	height: 3em;
-	min-width: 4em;
-	button {
-		margin-right: 5px;
-	}
+	min-width: 6em;
 }
 
 @media only screen and (max-width: 800px) {

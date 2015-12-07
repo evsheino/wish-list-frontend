@@ -32,7 +32,8 @@ angular
     .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
-        activeTab: 'home'
+        activeTab: 'home',
+        controllerAs: 'ctrl'
     })
     .when('/login', {
         templateUrl: 'views/login.html',
@@ -46,11 +47,13 @@ angular
     .when('/list/edit', {
         templateUrl: 'views/edit_list.html',
         controller: 'EditListCtrl',
-        activeTab: 'edit-list'
+        activeTab: 'edit-list',
+        controllerAs: 'ctrl'
     })
     .when('/list/:userId', {
         templateUrl: 'views/view_list.html',
-        controller: 'ViewListCtrl'
+        controller: 'ViewListCtrl',
+        controllerAs: 'ctrl'
     })
     .otherwise({
         redirectTo: '/'

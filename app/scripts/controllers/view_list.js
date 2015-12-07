@@ -8,20 +8,45 @@
  * Controller of the wishlistsApp
  */
 angular.module('wishlistsApp')
-.controller('ViewListCtrl', function ($scope, $routeParams, Users, Categories, Gifts, LoginService) {
+.controller('ViewListCtrl', function ($scope, $routeParams, Users, Purchases,
+            Gifts, Categories, LoginService) {
+    var self = this;
+    self.entries = [];
+
+    var user = LoginService.getCurrentUser();
+
+    Categories.getList().then(function(categories) {
+        categories.forEach(function(cat) {
+            $scope.categories[cat.id] = cat;
+        });
+    });
+
     Users.one($routeParams.userId).getList('gifts').then(function(list) {
-        $scope.entries = list;
+        self.entries = list;
     });
 
     $scope.categories = {};
-    $scope.editMode;
+    self.editMode;
+
+    $scope.startPurchase = function(index) {
+        $scope.editMode = index;
+    };
+
+    $scope.cancelPurchase = function() {
+        $scope.editMode = null;
+    };
 
     // Update the entry
-    $scope.markAsBought = function(gift) {
-        gift.put().then(
+    $scope.addPurchase = function(gift, comment) {
+        var purchase = {
+            gift: gift.id,
+            user: user.user_id,
+            comment: comment
+        };
+        Purchases.post(purchase).then(
             function() {
                 $scope.msg = 'Updated successfully';
-                $scope.editMode = null;
+                self.editMode = null;
             },
             function(err) { $scope.err = err; });
     };
